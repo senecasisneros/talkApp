@@ -1,6 +1,6 @@
 // CONSTANTS
 const PORT = process.env.PORT || 8000;
-const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost/appTalk';
+const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost/TalkApp';
 
 // PACKAGE REQUIRES
 const bodyParser = require('body-parser');
@@ -11,21 +11,29 @@ const path = require('path');
 
 require('dotenv').load({ silent: true });
 
-// DB CONNECT
-require('mongoose').connect(MONGO_URI, err => {
-  if (err) throw err;
-  console.log(`MongoDB connected to ${MONGO_URI}`);
-});
-
 // APP DECLARATION
 const app = express();
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../build')));
+app.use(express.static('src'));
+
+// // DB CONNECT
+// require('mongoose').connect(MONGO_URI, err => {
+//   if (err) throw err;
+//   console.log(`MongoDB connected to ${MONGO_URI}`);
+// });
+
+require('mongoose').connect('mongodb://localhost/TalkApp', {
+  useMongoClient: true,
+  /* other options */
+});
+
+if (process.env.NODE_ENV === 'prod') {
+  app.use(express.static(path.join(__dirname, '../dist')));
 } else {
   // WEBPACK CONFIG
   const webpack = require('webpack');
-  const webpackConfig = require('../webpack.dev');
+  const webpackConfig = require('../webpack.config');
+  // const webpackConfig = require('../webpack.dev');
   const compiler = webpack(webpackConfig);
 
   app.use(require('webpack-dev-middleware')(compiler, {
@@ -33,7 +41,7 @@ if (process.env.NODE_ENV === 'production') {
     publicPath: webpackConfig.output.publicPath,
   }));
 
-  app.use(require('webpack-hot-middleware')(compiler));
+  // app.use(require('webpack-hot-middleware')(compiler));
 }
 
 // GENERAL MIDDLEWARE
