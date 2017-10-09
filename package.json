@@ -1,7 +1,7 @@
 {
   "name": "talkapp",
   "version": "1.0.0",
-  "description": "",
+  "description": "A chat app based on the users location",
   "main": "server/app.js",
   "scripts": {
     "build": "webpack --process",
@@ -9,7 +9,7 @@
     "start": "webpack --progress && webpack-dev-server -d --hot --config webpack.config.js --watch --progress",
     "prod": "NODE_ENV='production' webpack"
   },
-  "author": "",
+  "author": "Seneca Sisneros",
   "license": "ISC",
   "engines": {
     "node": "8.3.0"

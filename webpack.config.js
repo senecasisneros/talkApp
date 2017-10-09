@@ -4,8 +4,6 @@ const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssets = require('optimize-css-assets-webpack-plugin');
 
-
-
 const config = {
   entry: './src/index.js',
   output: {
