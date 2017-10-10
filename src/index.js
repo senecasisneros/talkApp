@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Locations from './components/Locations';
+import Layout from './components/Layout';
 
 // require('./Styles/style.css')
 class App extends Component {
@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <div>
         <h1>Talk App</h1>
-        <Locations />
+        <Layout />
       </div>
     )
   }
