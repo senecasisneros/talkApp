@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './components/Layout';
+import Layout from './layouts/Layout';
+import styles from './Styles/styles';
 
-// require('./Styles/style.css')
 class App extends Component {
   render() {
     return (
       <div>
-        <h1>Talk App</h1>
+        <h1 style={styles.universal.header}>Talk App</h1>
         <Layout />
       </div>
     )

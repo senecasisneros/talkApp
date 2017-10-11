@@ -1,33 +1,56 @@
 //Rendering a list of locations/zones
 import React, { Component } from 'react';
 import Location from '../components/Location.js'
+import styles from '../Styles/styles';
 
 class Locations extends Component {
   constructor() {
     super()
 
     this.state = {
-      list: [
-        {name:"Zone 1", zipcode:'90001', comments:11},
-        {name:"Zone 2", zipcode:'90002', comments:12},
-        {name:"Zone 3", zipcode:'90003', comments:13},
-        {name:"Zone 4", zipcode:'90004', comments:14},
-        {name:"Zone 5", zipcode:'90005', comments:15}
-      ]
+      zone: {
+        name: '',
+        zipcode: ''
+      },
+      list: []
     }
   }
 
+  updateZone(event) {
+    let targetId = event.target.id;
+    let value = event.target.value;
+
+    let updatedZone = Object.assign({}, this.state.zone);
+    updatedZone[targetId] = value;
+
+    this.setState({
+      zone: updatedZone
+    })
+  }
+
+  submitZone() {
+    let updatedList = Object.assign([], this.state.list);
+    updatedList.push(this.state.zone);
+
+    this.setState({
+      list: updatedList
+    })
+  }
+
   render() {
-    const listItems = this.state.list.map((lists, index) => {
+    const listItems = this.state.list.map((zone, index) => {
       return (
-        <li key={index}><Location location={lists} /></li>
+        <li key={index}><Location location={zone} /></li>
       )
     })
     return (
-      <div>
+      <div style={styles.comment.commentsBox}>
         <ol>
           {listItems}
         </ol>
+        <input id="name" onChange={this.updateZone.bind(this)} className="form-control" type="text" placeholder="Enter Name"/><br/>
+        <input id="zipCode" onChange={this.updateZone.bind(this)} className="form-control" type="text" placeholder="Enter Zip Code"/><br/>
+        <button onClick={this.submitZone.bind(this)} className="btn btn-danger">Add Zone</button>
       </div>
     )
   }

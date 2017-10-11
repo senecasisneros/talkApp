@@ -1,5 +1,8 @@
 export default {
   universal: {
+    header: {
+      textAlign: "center"
+    }
   },
   location: {
     container: {
@@ -26,7 +29,7 @@ export default {
     commentslist: {
       listStyleType:'none'
     },
-    comments: {
+    body: {
       fontSize:18,
       fontWeight: 400
     },
