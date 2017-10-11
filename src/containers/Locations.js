@@ -1,6 +1,8 @@
 //Rendering a list of locations/zones
 import React, { Component } from 'react';
 import Location from '../components/Location.js'
+import axios from 'axios';
+import moment from 'moment';
 import styles from '../Styles/styles';
 
 class Locations extends Component {
@@ -10,10 +12,24 @@ class Locations extends Component {
     this.state = {
       zone: {
         name: '',
-        zipcode: ''
+        zipCodes: ''
       },
       list: []
     }
+  }
+
+  componentDidMount() {
+    axios.get(`/api/locations`)
+    .then(res => {
+      let results = res.data;
+      console.log('results:', results);
+      this.setState({
+        list: results
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   updateZone(event) {
