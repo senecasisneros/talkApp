@@ -1,13 +1,19 @@
 import axios from 'axios';
 
 const API = {
-  getLocations: (test) => {
+  getLocations: () => {
     return axios.get('/api/locations')
-    .then(response => {
-      let results = response.data;
+    .then(res => {
+      let results = res.data;
       return results;
     })
     .catch(console.error);
+  },
+  getComments: () => {
+    return axios.get('/api/comments')
+    .then(res => {
+      return res.data
+    })
   }
 }
 // getOne() {

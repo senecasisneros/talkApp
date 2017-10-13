@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Comment from '../components/Comment';
 import axios from 'axios';
-
+import API from './../utils/API'
 import styles from '../Styles/styles';
 
 class Comments extends Component {
@@ -19,16 +19,14 @@ class Comments extends Component {
   }
 
   componentDidMount() {
-    axios.get(`api/comments`)
-    .then(res => {
-      let results = res.data;
-      this.setState({
-        list: results
+    API.getComments()
+    .then(function(results) {
+      this.setState(function () {
+        return {
+          list: results
+        }
       })
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    }.bind(this));
   }
 
   updateUsername(event) {
