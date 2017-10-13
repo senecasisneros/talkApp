@@ -5,6 +5,8 @@ import axios from 'axios';
 import moment from 'moment';
 import styles from '../Styles/styles';
 
+import API from './../utils/API'
+
 class Locations extends Component {
   constructor() {
     super()
@@ -19,17 +21,14 @@ class Locations extends Component {
   }
 
   componentDidMount() {
-    axios.get(`/api/locations`)
-    .then(res => {
-      let results = res.data;
-      console.log('results:', results);
-      this.setState({
-        list: results
+    API.getLocations()
+    .then(function (results) {
+      this.setState(function () {
+        return {
+          list: results
+        }
       })
-    })
-    .catch(err => {
-      console.log(err);
-    })
+    }.bind(this));
   }
 
   updateZone(event) {

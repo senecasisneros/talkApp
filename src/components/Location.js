@@ -4,7 +4,6 @@ import moment from 'moment';
 
 class Location extends Component {
   render() {
-    console.log('this.props:', this.props);
     const locationStyle = styles.location;
     return (
       <div style={locationStyle.container}>
