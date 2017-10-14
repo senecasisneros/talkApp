@@ -9,17 +9,29 @@ const API = {
     })
     .catch(console.error);
   },
+  createLocation: (location) => {
+    axios.post('/api/locations', location)
+    .then(res => {
+      return res.data
+    })
+    .catch(console.error);
+  },
   getComments: () => {
     return axios.get('/api/comments')
     .then(res => {
       return res.data
     })
+    .catch(console.error);
+  },
+  createComment: (comment) => {
+    axios.post('/api/comments', comment)
+    .then(res => {
+      return res.data;
+    })
+    .catch(console.error);
   }
 }
 // getOne() {
-//
-// },
-// create() {
 //
 // },
 // update() {

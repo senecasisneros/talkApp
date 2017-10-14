@@ -14,7 +14,7 @@ class Locations extends Component {
     this.state = {
       zone: {
         name: '',
-        zipCodes: ''
+        zipCode: ''
       },
       list: []
     }
@@ -31,7 +31,7 @@ class Locations extends Component {
     }.bind(this));
   }
 
-  updateZone(event) {
+  addLocation(event) {
     let targetId = event.target.id;
     let value = event.target.value;
 
@@ -43,10 +43,12 @@ class Locations extends Component {
     })
   }
 
-  submitZone() {
+  submitLocation() {
+    let updatedLocation = Object.assign({}, this.state.zone)
+    // updatedLocation['zipCodes'] = updatedLocation.zipCodes.split(',');    //converting string into an array(for the backend)
+    API.createLocation(updatedLocation)
     let updatedList = Object.assign([], this.state.list);
-    updatedList.push(this.state.zone);
-
+    updatedList.push(updatedLocation);
     this.setState({
       list: updatedList
     })
@@ -63,9 +65,9 @@ class Locations extends Component {
         <ol>
           {listItems}
         </ol>
-        <input id="name" onChange={this.updateZone.bind(this)} className="form-control" type="text" placeholder="Enter Name"/><br/>
-        <input id="zipCode" onChange={this.updateZone.bind(this)} className="form-control" type="text" placeholder="Enter Zip Code"/><br/>
-        <button onClick={this.submitZone.bind(this)} className="btn btn-danger">Add Zone</button>
+        <input id="name" onChange={this.addLocation.bind(this)} className="form-control" type="text" placeholder="Enter Name"/><br/>
+        <input id="zipCode" onChange={this.addLocation.bind(this)} className="form-control" type="text" placeholder="Enter Zip Code"/><br/>
+        <button onClick={this.submitLocation.bind(this)} className="btn btn-danger">Add Zone</button>
       </div>
     )
   }
