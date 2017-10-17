@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 const webpack = require('webpack');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');

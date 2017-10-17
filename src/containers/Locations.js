@@ -1,52 +1,32 @@
-//Rendering a list of locations/zones
 import React, { Component } from 'react';
-import Location from '../components/Location.js'
-import axios from 'axios';
-import moment from 'moment';
+import { CreateLocation, Location } from '../components';
 import styles from '../Styles/styles';
-
-import API from './../utils/API'
+import API from './../utils/API';
 
 class Locations extends Component {
   constructor() {
     super()
 
     this.state = {
-      zone: {
-        name: '',
-        zipCode: ''
-      },
+      selected: 0,
       list: []
     }
   }
 
   componentDidMount() {
     API.getLocations()
-    .then(function (results) {
-      this.setState(function () {
+    .then((results) => {
+      this.setState(() => {
         return {
           list: results
         }
       })
-    }.bind(this));
-  }
-
-  addLocation(event) {
-    let targetId = event.target.id;
-    let value = event.target.value;
-
-    let updatedZone = Object.assign({}, this.state.zone);
-    updatedZone[targetId] = value;
-
-    this.setState({
-      zone: updatedZone
     })
   }
 
-  submitLocation() {
-    let updatedLocation = Object.assign({}, this.state.zone)
-    // updatedLocation['zipCodes'] = updatedLocation.zipCodes.split(',');    //converting string into an array(for the backend)
-    API.createLocation(updatedLocation)
+  submitLocation(location) {
+    let updatedLocation = Object.assign({}, location)
+    API.createLocation(updatedLocation);
     let updatedList = Object.assign([], this.state.list);
     updatedList.push(updatedLocation);
     this.setState({
@@ -54,23 +34,29 @@ class Locations extends Component {
     })
   }
 
+  selectZone(index) {
+    this.setState({
+      selected: index
+    })
+  }
+
   render() {
     const listItems = this.state.list.map((zone, index) => {
+      let selected = (index == this.state.selected)
       return (
-        <li key={index}><Location location={zone} /></li>
+        <li key={index}><Location index={index} select={this.selectZone.bind(this)}
+          isSelected={selected} location={zone} /></li>
+        )
+      })
+      return (
+        <div style={styles.comment.commentsBox}>
+          <ol>
+            {listItems}
+          </ol>
+          <CreateLocation onCreate={this.submitLocation.bind(this)}/>
+        </div>
       )
-    })
-    return (
-      <div style={styles.comment.commentsBox}>
-        <ol>
-          {listItems}
-        </ol>
-        <input id="name" onChange={this.addLocation.bind(this)} className="form-control" type="text" placeholder="Enter Name"/><br/>
-        <input id="zipCode" onChange={this.addLocation.bind(this)} className="form-control" type="text" placeholder="Enter Zip Code"/><br/>
-        <button onClick={this.submitLocation.bind(this)} className="btn btn-danger">Add Zone</button>
-      </div>
-    )
+    }
   }
-}
 
-export default Locations;
+  export default Locations;
