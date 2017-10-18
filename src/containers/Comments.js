@@ -8,25 +8,27 @@ import actions from './../actions/actions';
 class Comments extends Component {
   constructor() {
     super()
-
-    this.state = {
-      list: []
-    }
+    //
+    // this.state = {
+    //   list: []
+    // }
   }
 
   componentDidMount() {
     API.getComments()
-    .then((results) => {
-      this.setState(() => {
-        return {
-          list: results
-        }
-      })
+    .then((comments) => {
+      this.props.commentsReceived(comments)
+      // this.setState(() => {
+      //   return {
+      //     list: results
+      //   }
+      // })
     })
   }
 
   submitComment(comment) {
     API.createComment(comment);
+    // this.props.commentsReceived(comments);
     let updatedList = Object.assign([], this.state.list);
     updatedList.push(updatedComment);
     this.setState({
@@ -35,12 +37,12 @@ class Comments extends Component {
   }
 
   render() {
-    const commentItem = this.state.list.map((comment, index) => {
+    const commentItem = this.props.list.map((comment, index) => {
       return (
         <li key={index}><Comment comment={comment}/></li>
       )
     })
-    
+
     const selectedLocation = this.props.locations[this.props.index]
     const locationName = (selectedLocation==null) ? '' : selectedLocation.name
 
@@ -61,8 +63,15 @@ class Comments extends Component {
 const stateToProps = (state) => {
   return {
     index: state.location.selectedLocation,
-    locations: state.location.list
+    locations: state.location.list,
+    list: state.comment.list
   }
 }
 
-export default connect(stateToProps)(Comments);
+const dispatchToProps = (dispatch) => {
+  return {
+    commentsReceived: (comments) => dispatch(actions.commentsReceived(comments))
+  }
+}
+
+export default connect(stateToProps, dispatchToProps)(Comments);

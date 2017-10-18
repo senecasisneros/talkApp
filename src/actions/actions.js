@@ -19,5 +19,11 @@ export default {
       type: constants.SELECT_LOCATION,
       selectedLocation: index
     }
+  },
+  commentsReceived: (comments) => {
+    return {
+      type: constants.COMMENTS_RECEIVED,
+      comments: comments
+    }
   }
 }
