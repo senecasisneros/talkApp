@@ -8,32 +8,19 @@ import actions from './../actions/actions';
 class Comments extends Component {
   constructor() {
     super()
-    //
-    // this.state = {
-    //   list: []
-    // }
+
   }
 
   componentDidMount() {
     API.getComments()
     .then((comments) => {
       this.props.commentsReceived(comments)
-      // this.setState(() => {
-      //   return {
-      //     list: results
-      //   }
-      // })
     })
   }
 
   submitComment(comment) {
     API.createComment(comment);
-    // this.props.commentsReceived(comments);
-    let updatedList = Object.assign([], this.state.list);
-    updatedList.push(updatedComment);
-    this.setState({
-      list: updatedList
-    })
+    this.props.commentCreated(comment);
   }
 
   render() {
@@ -70,7 +57,8 @@ const stateToProps = (state) => {
 
 const dispatchToProps = (dispatch) => {
   return {
-    commentsReceived: (comments) => dispatch(actions.commentsReceived(comments))
+    commentsReceived: (comments) => dispatch(actions.commentsReceived(comments)),
+    commentCreated: (comment) => dispatch(actions.commentCreated(comment))
   }
 }
 

@@ -25,5 +25,11 @@ export default {
       type: constants.COMMENTS_RECEIVED,
       comments: comments
     }
+  },
+  commentCreated: (comment) => {
+    return {
+      type: constants.COMMENT_CREATED,
+      comment: comment
+    }
   }
 }

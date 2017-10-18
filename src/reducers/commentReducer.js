@@ -14,6 +14,12 @@ export default (state = initialState, action) => {
     updated['list'] = action.comments;
     return updated;
 
+    case constants.COMMENT_CREATED:
+    let updatedList = Object.assign([], updated.list);
+    updatedList.push(action.comment)
+    updated['list'] = updatedList
+    return updated
+
     default:
     return state
 
