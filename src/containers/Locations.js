@@ -11,7 +11,7 @@ class Locations extends Component {
     super()
 
     this.state = {
-      selected: 0
+      // selected: 0
     }
   }
 
@@ -28,14 +28,16 @@ class Locations extends Component {
   }
 
   selectLocation(index) {
-    this.setState({
-      selected: index
-    })
+    this.props.selectLocation(index);
+
+    // this.setState({
+    //   selected: index
+    // })
   }
 
   render() {
     const listItems = this.props.list.map((location, index) => {
-      let selected = (index == this.state.selected)
+      let selected = (index == this.props.selected)
       return (
         <li key={index}><Location index={index} select={this.selectLocation.bind(this)}
           isSelected={selected} location={location} /></li>
@@ -52,16 +54,18 @@ class Locations extends Component {
     }
   }
 
-  const stateToProps = (state) => {
+  const stateToProps = (state) => {  //state to props
     return {
-      list: state.location.list
+      list: state.location.list,
+      selected: state.location.selectedLocation
     }
   }
 
   const dispatchToProps = (dispatch) => {
     return {
       locationsReceived: (locations) => dispatch(actions.locationsReceived(locations)),
-      locationCreated: (location) => dispatch(actions.locationCreated(location))
+      locationCreated: (location) => dispatch(actions.locationCreated(location)),
+      selectLocation: (index) => dispatch(actions.selectLocation(index))
     }
   }
 

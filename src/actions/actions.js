@@ -13,5 +13,11 @@ export default {
       type: constants.LOCATION_CREATED,
       location: location
     }
+  },
+  selectLocation: (index) => {
+    return {
+      type: constants.SELECT_LOCATION,
+      selectedLocation: index
+    }
   }
 }

@@ -1,7 +1,8 @@
 import constants from '../constants/constants';
 
-var initialState = {
-  list: [] //Current state
+var initialState = { //Current state
+  list: [], //object on state
+  selectedLocation: 0
 }
 
 //update the data from the location
@@ -19,6 +20,10 @@ export default (state = initialState, action) => {
       let updatedList = Object.assign([], updated.list) //copy of the list object that is in the state
       updatedList.push(action.location)
       updated['list'] = updatedList
+      return updated
+
+    case constants.SELECT_LOCATION:
+      updated['selectedLocation'] = action.selectedLocation
       return updated
 
     default:
