@@ -45,6 +45,9 @@
     "moment": "^2.19.1",
     "mongoose": "^4.10.5",
     "morgan": "^1.8.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   }
 }

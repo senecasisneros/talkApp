@@ -2,50 +2,43 @@ import React, { Component } from 'react';
 import { CreateLocation, Location } from '../components';
 import styles from '../Styles/styles';
 import API from './../utils/API';
+import { connect } from 'react-redux';
+import actions from './../actions/actions';
+import store from './../stores/store';
 
 class Locations extends Component {
   constructor() {
     super()
 
     this.state = {
-      selected: 0,
-      list: []
+      selected: 0
     }
   }
 
   componentDidMount() {
     API.getLocations()
-    .then((results) => {
-      this.setState(() => {
-        return {
-          list: results
-        }
-      })
+    .then((locations) => {
+      this.props.locationsReceived(locations)
     })
   }
 
   submitLocation(location) {
-    let updatedLocation = Object.assign({}, location)
-    API.createLocation(updatedLocation);
-    let updatedList = Object.assign([], this.state.list);
-    updatedList.push(updatedLocation);
-    this.setState({
-      list: updatedList
-    })
+    API.createLocation(location);
+    this.props.locationCreated(location)
   }
 
-  selectZone(index) {
+  selectLocation(index) {
     this.setState({
       selected: index
     })
   }
 
   render() {
-    const listItems = this.state.list.map((zone, index) => {
+    const listItems = this.props.list.map((location, index) => {
       let selected = (index == this.state.selected)
       return (
-        <li key={index}><Location index={index} select={this.selectZone.bind(this)}
-          isSelected={selected} location={zone} /></li>
+        <li key={index}><Location index={index} select={this.selectLocation.bind(this)}
+          isSelected={selected} location={location} /></li>
         )
       })
       return (
@@ -59,4 +52,17 @@ class Locations extends Component {
     }
   }
 
-  export default Locations;
+  const stateToProps = (state) => {
+    return {
+      list: state.location.list
+    }
+  }
+
+  const dispatchToProps = (dispatch) => {
+    return {
+      locationsReceived: (locations) => dispatch(actions.locationsReceived(locations)),
+      locationCreated: (location) => dispatch(actions.locationCreated(location))
+    }
+  }
+
+  export default connect(stateToProps, dispatchToProps)(Locations);

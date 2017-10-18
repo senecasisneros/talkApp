@@ -24,8 +24,9 @@ class Comments extends Component {
   }
 
   submitComment(comment) {
-    let updatedComment = Object.assign({}, comment);
-    API.createComment(updatedComment);
+    // let updatedComment = Object.assign({}, comment);
+    // API.createComment(updatedComment);
+    API.createComment(comment);
     let updatedList = Object.assign([], this.state.list);
     updatedList.push(updatedComment);
     this.setState({

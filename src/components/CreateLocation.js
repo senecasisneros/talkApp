@@ -4,7 +4,7 @@ class CreateLocation extends Component {
   constructor() {
     super()
     this.state = {
-      zone: {
+      location: {
         name: '',
         zipCode: ''
       }
@@ -12,15 +12,15 @@ class CreateLocation extends Component {
   }
 
   addLocation(event) {
-    let updatedZone = Object.assign({}, this.state.zone);
+    let updatedZone = Object.assign({}, this.state.location);
     updatedZone[event.target.id] = event.target.value;
     this.setState({
-      zone: updatedZone
+      location: updatedZone
     })
   }
 
   submitLocation() {
-    this.props.onCreate(this.state.zone);
+    this.props.onCreate(this.state.location);
   }
 
   render() {

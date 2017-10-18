@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const locationSchema = new mongoose.Schema({
   name: {type: String, default: ""},
-  zipCodes: {type: Number },
+  zipCode: {type: Number, deafault: [] },
   timestamp: {type: Date, default: Date.now}
 });
 
