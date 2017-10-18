@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { CreateComment, Comment } from '../components';
 import API from './../utils/API';
 import styles from '../Styles/styles';
+import { connect } from 'react-redux';
+import actions from './../actions/actions';
 
 class Comments extends Component {
   constructor() {
@@ -24,8 +26,6 @@ class Comments extends Component {
   }
 
   submitComment(comment) {
-    // let updatedComment = Object.assign({}, comment);
-    // API.createComment(updatedComment);
     API.createComment(comment);
     let updatedList = Object.assign([], this.state.list);
     updatedList.push(updatedComment);
@@ -40,8 +40,13 @@ class Comments extends Component {
         <li key={index}><Comment comment={comment}/></li>
       )
     })
+    
+    const selectedLocation = this.props.locations[this.props.index]
+    const locationName = (selectedLocation==null) ? '' : selectedLocation.name
+
     return (
       <div>
+        <h2> { locationName }</h2>
         <div style={styles.comment.commentsBox}>
           <ul style={styles.comment.commentslist}>
             { commentItem }
@@ -53,4 +58,11 @@ class Comments extends Component {
   }
 }
 
-export default Comments
+const stateToProps = (state) => {
+  return {
+    index: state.location.selectedLocation,
+    locations: state.location.list
+  }
+}
+
+export default connect(stateToProps)(Comments);

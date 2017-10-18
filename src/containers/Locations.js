@@ -4,15 +4,11 @@ import styles from '../Styles/styles';
 import API from './../utils/API';
 import { connect } from 'react-redux';
 import actions from './../actions/actions';
-import store from './../stores/store';
 
 class Locations extends Component {
   constructor() {
     super()
 
-    this.state = {
-      // selected: 0
-    }
   }
 
   componentDidMount() {
@@ -29,10 +25,6 @@ class Locations extends Component {
 
   selectLocation(index) {
     this.props.selectLocation(index);
-
-    // this.setState({
-    //   selected: index
-    // })
   }
 
   render() {

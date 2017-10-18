@@ -12,7 +12,6 @@ const API = {
   createLocation: (location) => {
     axios.post('/api/locations', location)
     .then(res => {
-      console.log('res.data:', res.data);
       return res.data
     })
     .catch(console.error);
