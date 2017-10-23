@@ -9,29 +9,59 @@ class Comments extends Component {
   constructor() {
     super()
 
+    this.state = {
+      commentsLoaded: false,
+      index: 0
+    }
   }
 
-  componentDidMount() {
-    API.getComments()
+  // componentDidMount() {
+  //   // API.getComments()
+  //   // .then((comments) => {
+  //   //   this.props.commentsReceived(comments)
+  //   // })
+  // }
+
+  submitComment(comment) {
+    let updatedComment = Object.assign({}, comment);
+
+    let location = this.props.locations[this.props.index];
+    updatedComment['location'] = location._id;
+
+    API.createComment(updatedComment);
+    this.props.commentCreated(updatedComment);
+  }
+
+  componentDidUpdate() {
+    let location = this.props.locations[this.props.index];
+    if(location == null) {
+      console.log('NO SELECTED ZONE!!!!')
+      return
+    }
+
+    if (this.props.commentsLoaded == true) {
+      return
+    }
+
+    let locationId = location._id;
+    API.getOneComment(locationId)
     .then((comments) => {
+      this.setState({
+        commentsLoaded: true
+      })
       this.props.commentsReceived(comments)
     })
   }
 
-  submitComment(comment) {
-    API.createComment(comment);
-    this.props.commentCreated(comment);
-  }
-
   render() {
-    const commentItem = this.props.list.map((comment, index) => {
+    const commentItem = this.props.comments.map((comment, index) => {
       return (
         <li key={index}><Comment comment={comment}/></li>
       )
     })
 
-    const selectedLocation = this.props.locations[this.props.index]
-    const locationName = (selectedLocation==null) ? '' : selectedLocation.name
+    const selectedLocation = this.props.locations[this.props.index];
+    const locationName = (selectedLocation==null) ? '' : selectedLocation.name;
 
     return (
       <div>
@@ -51,10 +81,10 @@ const stateToProps = (state) => {
   return {
     index: state.location.selectedLocation,
     locations: state.location.list,
-    list: state.comment.list
+    comments: state.comment.list,
+    commentsLoaded: state.comment.commentsLoaded,
   }
 }
-
 const dispatchToProps = (dispatch) => {
   return {
     commentsReceived: (comments) => dispatch(actions.commentsReceived(comments)),

@@ -31,5 +31,11 @@ export default {
       type: constants.COMMENT_CREATED,
       comment: comment
     }
+  },
+  selectLocation: (index) => {
+  return {
+    type: constants.SELECT_LOCATION,
+    selectedLocation: index
   }
+}
 }

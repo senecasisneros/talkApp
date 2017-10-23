@@ -17,7 +17,14 @@ const API = {
     .catch(console.error);
   },
   getComments: () => {
-    return axios.get('/api/comments')
+    return axios.get(`/api/comments`)
+    .then(res => {
+      return res.data
+    })
+    .catch(console.error);
+  },
+  getOneComment: (locationId) => {
+    return axios.get(`/api/comments/${locationId}`)
     .then(res => {
       return res.data
     })
@@ -31,9 +38,6 @@ const API = {
     .catch(console.error);
   }
 }
-// getOne() {
-//
-// },
 // update() {
 //
 // },

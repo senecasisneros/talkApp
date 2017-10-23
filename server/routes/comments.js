@@ -19,16 +19,17 @@ router.post('/', (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
-  Comment.findById(req.params.id, (err, comment) => {
+router.get('/:location', (req, res) => {
+  Comment.find({location: req.params.location}, (err, comment) => {
     if(err || !comment) {
       return res.status(400).send(err || "Comment not found");
     }
     res.send(comment)
   })
 })
+
 router.put('/:id', (req, res) => {
-  Comment.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true }, (err, comment) => {
+  Comment.findByIdAndUpdate(comment, { $set: req.body }, { new: true }, (err, comment) => {
     if (err) {
       return res.status(400).send(err);
     }
