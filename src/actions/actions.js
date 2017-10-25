@@ -20,10 +20,11 @@ export default {
       selectedLocation: index
     }
   },
-  commentsReceived: (comments) => {
+  commentsReceived: (comments, location) => {
     return {
       type: constants.COMMENTS_RECEIVED,
-      comments: comments
+      comments: comments,
+      location: location
     }
   },
   commentCreated: (comment) => {

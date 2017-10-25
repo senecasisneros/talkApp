@@ -10,17 +10,9 @@ class Comments extends Component {
     super()
 
     this.state = {
-      commentsLoaded: false,
       index: 0
     }
   }
-
-  // componentDidMount() {
-  //   // API.getComments()
-  //   // .then((comments) => {
-  //   //   this.props.commentsReceived(comments)
-  //   // })
-  // }
 
   submitComment(comment) {
     let updatedComment = Object.assign({}, comment);
@@ -46,10 +38,8 @@ class Comments extends Component {
     let locationId = location._id;
     API.getOneComment(locationId)
     .then((comments) => {
-      this.setState({
-        commentsLoaded: true
-      })
-      this.props.commentsReceived(comments)
+      this.setState({commentsLoaded: true})
+      this.props.commentsReceived(comments, location)
     })
   }
 
@@ -87,7 +77,7 @@ const stateToProps = (state) => {
 }
 const dispatchToProps = (dispatch) => {
   return {
-    commentsReceived: (comments) => dispatch(actions.commentsReceived(comments)),
+    commentsReceived: (comments, location) => dispatch(actions.commentsReceived(comments, location)),
     commentCreated: (comment) => dispatch(actions.commentCreated(comment))
   }
 }
